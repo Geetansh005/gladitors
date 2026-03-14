@@ -4,6 +4,7 @@ import Login from "./Login";
 import Chatbot from "./Chat";
 import Profile from "./Profile";
 import ProtectedRoute from "./ProtectedRoute";
+import SelfAssessment from "./SelfAssessment";
 import Navbar from "./Navbar";
 
 function App() {
@@ -35,6 +36,15 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+  path="/assessment"
+  element={
+    <ProtectedRoute>
+      <SelfAssessment />
+    </ProtectedRoute>
+  }
+/>
 
       </Routes>
     </>
