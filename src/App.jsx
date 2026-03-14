@@ -4,36 +4,40 @@ import Login from "./Login";
 import Chatbot from "./Chat";
 import Profile from "./Profile";
 import ProtectedRoute from "./ProtectedRoute";
+import Navbar from "./Navbar";
 
 function App() {
   return (
-    <Routes>
+    <>
+      <Navbar />
 
-      <Route path="/" element={<Home />} />
+      <Routes>
 
-      <Route path="/login" element={<Login />} />
+        {/* Public */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
 
-      {/* Protected pages */}
+        {/* Protected */}
+        <Route
+          path="/chat"
+          element={
+            <ProtectedRoute>
+              <Chatbot />
+            </ProtectedRoute>
+          }
+        />
 
-      <Route
-        path="/chat"
-        element={
-          <ProtectedRoute>
-            <Chatbot />
-          </ProtectedRoute>
-        }
-      />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
 
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
-
-    </Routes>
+      </Routes>
+    </>
   );
 }
 
