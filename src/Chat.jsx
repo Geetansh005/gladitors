@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Chatbot() {
   const [messages, setMessages] = useState([
     { role: "assistant", content: "Hello Geetansh 👋 Ask me anything." }
   ]);
   const [input, setInput] = useState("");
+  const navigate = useNavigate();
+
 
   const sendMessage = () => {
     if (!input.trim()) return;
@@ -49,10 +53,19 @@ export default function Chatbot() {
       {/* Chat Area */}
       <div className="flex flex-col flex-1">
 
-        {/* Header */}
-        <div className="border-b border-gray-800 p-4 text-lg font-semibold backdrop-blur">
-          AI Chat
-        </div>
+       <div className="border-b border-gray-800 p-4 text-lg font-semibold backdrop-blur flex justify-between items-center">
+
+  <span>AI Chat</span>
+
+  {/* Profile Icon */}
+  <div
+    onClick={() => navigate("/profile")}
+    className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center cursor-pointer hover:scale-110 transition"
+  >
+    G
+  </div>
+
+</div>
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
