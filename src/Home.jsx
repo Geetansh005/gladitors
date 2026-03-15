@@ -1,154 +1,217 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import SkillAnalyzer from "./SkillAnalyzer";
 
-export default function Home() {
+export default function PsychometricTest() {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
-
-  // Smart redirect: Logged out → Login → then back to /chat
-  const handleStartTest = () => {
-  if (isLoggedIn) {
-    navigate("/assessment"); // go to career test
-  } else {
-    navigate("/login", {
-      state: { from: { pathname: "/assessment" } }
-    });
-  }
-};
-
-  const careers = [
-    "Artificial Intelligence",
-    "Web Development",
-    "Data Science",
-    "Cybersecurity",
-    "UI / UX Design",
-    "Digital Marketing",
-  ];
 
   return (
-    <div className="bg-gradient-to-br from-black via-gray-900 to-black text-white">
+    <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white overflow-hidden">
+
+      {/* animated glow background */}
+      <div className="absolute w-[600px] h-[600px] bg-purple-600/20 blur-[160px] top-[-200px] left-[-200px] animate-pulse" />
+      <div className="absolute w-[600px] h-[600px] bg-blue-600/20 blur-[160px] bottom-[-200px] right-[-200px] animate-pulse" />
 
       {/* HERO */}
-      <section className="text-center py-24 px-6">
-        <h1 className="text-5xl font-bold mb-6">
-          Find Your Perfect Career Path with AI
+      <section className="relative py-32 text-center px-6">
+
+        {/* badge */}
+        <div className="inline-block mb-6 px-6 py-2 border border-cyan-500/40 bg-cyan-500/10 text-cyan-300 rounded-full text-sm backdrop-blur-lg">
+          Scientific Career Assessment
+        </div>
+
+        {/* title */}
+        <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
+          Psychometric Test
         </h1>
-        <p className="text-gray-400 max-w-2xl mx-auto">
-          Our AI analyzes your interests, skills, and academic background to recommend the best career path and learning roadmap.
+
+        {/* description */}
+        <p className="max-w-2xl mx-auto text-gray-400 text-lg leading-relaxed">
+          Discover your true potential with an AI-powered scientific career
+          assessment designed to match your personality, interests, and
+          abilities with the most suitable career path.
         </p>
 
-        <div className="mt-8 flex justify-center gap-4">
-          <button
-            onClick={handleStartTest}
-            className="px-8 py-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg hover:scale-105 transition"
-          >
-           {isLoggedIn ? "Continue Assessment" : "Start Career Test"}  </button>
-
-          <button
-            onClick={handleStartTest}
-            className="px-8 py-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition"
-          >
-            Get AI Guidance
-          </button>
-        </div>
-      </section>
-
-      {/* AI CAREER TEST */}
-      <section className="py-20 text-center px-6 border-t border-gray-800">
-        <h2 className="text-3xl font-semibold mb-6">AI Career Assessment</h2>
-        <p className="text-gray-400 max-w-xl mx-auto">
-          Answer a few questions about your interests, personality, and skills. Our AI will analyze your responses and suggest the best career options for you.
-        </p>
-
+        {/* CTA */}
         <button
-          onClick={handleStartTest}
-          className="mt-8 px-8 py-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg hover:scale-105 transition"
+          onClick={() => navigate("/assessment")}
+          className="mt-10 px-12 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-110 transition duration-300 shadow-xl shadow-purple-500/30"
         >
-          {isLoggedIn ? "Continue to AI Chat" : "Take the Test"}
+          Take The Test
         </button>
+
       </section>
 
-      {/* HOW IT WORKS */}
-      <section className="py-20 border-t border-gray-800 px-6">
-        <h2 className="text-3xl font-semibold text-center mb-12">How It Works</h2>
-        <div className="max-w-5xl mx-auto grid md:grid-cols-4 gap-8 text-center">
-          <div className="bg-gray-900 p-6 rounded-xl border border-gray-800">
-            <div className="text-3xl mb-3">1️⃣</div>
-            <h3 className="font-semibold">Take AI Test</h3>
-            <p className="text-gray-400 text-sm mt-2">Answer questions about your skills and interests.</p>
-          </div>
-          <div className="bg-gray-900 p-6 rounded-xl border border-gray-800">
-            <div className="text-3xl mb-3">2️⃣</div>
-            <h3 className="font-semibold">AI Analysis</h3>
-            <p className="text-gray-400 text-sm mt-2">AI evaluates your personality and abilities.</p>
-          </div>
-          <div className="bg-gray-900 p-6 rounded-xl border border-gray-800">
-            <div className="text-3xl mb-3">3️⃣</div>
-            <h3 className="font-semibold">Career Suggestions</h3>
-            <p className="text-gray-400 text-sm mt-2">Get personalized career recommendations.</p>
-          </div>
-          <div className="bg-gray-900 p-6 rounded-xl border border-gray-800">
-            <div className="text-3xl mb-3">4️⃣</div>
-            <h3 className="font-semibold">Learning Roadmap</h3>
-            <p className="text-gray-400 text-sm mt-2">Follow courses and skill paths to reach your goal.</p>
-          </div>
-        </div>
+      {/* WHAT IS TEST */}
+      <section className="text-center px-6 pb-16">
+
+        <h2 className="text-4xl font-semibold mb-6 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+          What is the Psychometric Test?
+
+        </h2>
+
+        <p className="max-w-2xl mx-auto text-gray-400">
+          A scientifically validated AI assessment that measures your
+          cognitive abilities, personality traits, interests, and aptitude
+          to recommend the most suitable career path.
+        </p>
+
       </section>
 
-      {/* CAREER PATHS */}
-      <section className="py-20 border-t border-gray-800 px-6">
-        <h2 className="text-3xl font-semibold text-center mb-12">Popular Career Paths</h2>
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-          {careers.map((career, index) => (
-            <div key={index} className="bg-gray-900 p-6 rounded-xl border border-gray-800 hover:scale-105 transition">
-              <h3 className="text-xl font-semibold mb-2">{career}</h3>
-              <p className="text-gray-400 text-sm">Explore roadmap, required skills, and career opportunities.</p>
-              <button 
-                onClick={handleStartTest}
-                className="mt-4 text-purple-400 hover:underline"
-              >
-                View Roadmap →
-              </button>
+      {/* FEATURE CARDS */}
+      <section className="pb-28 px-6">
+
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
+
+          {/* CARD 1 */}
+          <div className="group p-8 rounded-2xl border border-gray-800 bg-white/5 backdrop-blur-xl hover:border-purple-500 hover:-translate-y-2 transition duration-300">
+
+            <div className="text-4xl mb-4 text-purple-400 group-hover:scale-110 transition">
+              🧠
             </div>
-          ))}
+
+            <h3 className="text-xl font-semibold mb-2">
+              Personality Assessment
+            </h3>
+
+            <p className="text-gray-400 text-sm">
+              Analyze your personality traits and behavior patterns
+              to understand environments where you perform best.
+            </p>
+
+          </div>
+
+          {/* CARD 2 */}
+          <div className="group p-8 rounded-2xl border border-gray-800 bg-white/5 backdrop-blur-xl hover:border-blue-500 hover:-translate-y-2 transition duration-300">
+
+            <div className="text-4xl mb-4 text-blue-400 group-hover:scale-110 transition">
+              🎯
+            </div>
+
+            <h3 className="text-xl font-semibold mb-2">
+              Interest Mapping
+            </h3>
+
+            <p className="text-gray-400 text-sm">
+              Discover what excites and motivates you so your career
+              aligns with your passions.
+            </p>
+
+          </div>
+
+          {/* CARD 3 */}
+          <div className="group p-8 rounded-2xl border border-gray-800 bg-white/5 backdrop-blur-xl hover:border-cyan-400 hover:-translate-y-2 transition duration-300">
+
+            <div className="text-4xl mb-4 text-cyan-400 group-hover:scale-110 transition">
+              📈
+            </div>
+
+            <h3 className="text-xl font-semibold mb-2">
+              Aptitude Analysis
+            </h3>
+
+            <p className="text-gray-400 text-sm">
+              Measure your analytical ability, reasoning, and problem
+              solving skills to match career opportunities.
+            </p>
+
+          </div>
+
         </div>
+
       </section>
+    <section className="py-24 px-6 border-t border-gray-800">
 
-      {/* AI CHATBOT SECTION */}
-      <section className="py-20 border-t border-gray-800 text-center px-6">
-        <h2 className="text-3xl font-semibold mb-6">Ask the AI Career Assistant</h2>
-        <p className="text-gray-400">Ask questions about careers, skills, and learning paths.</p>
-        <button
-          onClick={handleStartTest}
-          className="mt-6 px-8 py-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg hover:scale-105 transition"
-        >
-          {isLoggedIn ? "Open AI Chat" : "Start Career Test"}
-        </button>
-      </section>
+  <h2 className="text-4xl text-center font-semibold mb-10 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+    See How AI Guides Your Career
+  </h2>
 
-      {/* SIGNUP CTA - ONLY SHOW IF NOT LOGGED IN */}
-      {!isLoggedIn && (
-        <section className="py-20 border-t border-gray-800 text-center px-6">
-          <h2 className="text-3xl font-semibold mb-6">Create Your Free Account</h2>
-          <p className="text-gray-400">Save your career reports and track your progress.</p>
-          <button
-            onClick={() => navigate("/login")}
-            className="mt-8 px-8 py-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg hover:scale-105 transition"
-          >
-            Sign Up Free
-          </button>
-        </section>
-      )}
+  <div className="max-w-6xl mx-auto">
 
-      {/* FOOTER */}
-      <footer className="border-t border-gray-800 py-10 text-center text-gray-500">
-        © 2026 AI Career Assistant
-      </footer>
+    <div className="relative rounded-2xl overflow-hidden border border-gray-800 shadow-xl shadow-purple-500/10">
+
+      {/* Video */}
+      <video
+        className="w-full h-[420px] object-cover"
+        controls
+        autoPlay
+        muted
+        loop
+      >
+        <source src="video.mp4" type="video/mp4" />
+      </video>
+
+      {/* Glow overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+
+    </div>
+
+  </div>
+
+</section>
+{/* NEXT STEPS */}
+<section className="py-24 px-6 border-t border-gray-800">
+
+  <h2 className="text-4xl text-center font-semibold mb-14 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+    Explore More Career Guidance
+  </h2>
+
+  <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10">
+
+    {/* AI CHATBOT CARD */}
+    <div
+      onClick={() => navigate("/chat")}
+      className="group cursor-pointer p-10 rounded-2xl border border-gray-800 bg-white/5 backdrop-blur-xl hover:border-purple-500 hover:-translate-y-2 transition duration-300 shadow-xl shadow-purple-500/10"
+    >
+
+      <div className="text-5xl mb-6 text-purple-400 group-hover:scale-110 transition">
+        🤖
+      </div>
+
+      <h3 className="text-2xl font-semibold mb-3">
+        AI Career Chatbot
+      </h3>
+
+      <p className="text-gray-400">
+        Talk with our AI assistant to get instant guidance on
+        careers, skills, learning paths, and job opportunities.
+      </p>
+
+      <div className="mt-6 text-purple-400 font-semibold group-hover:underline">
+        Start Chat →
+      </div>
+
+    </div>
+
+
+    {/* MENTORSHIP CARD */}
+    <div
+      className="group cursor-pointer p-10 rounded-2xl border border-gray-800 bg-white/5 backdrop-blur-xl hover:border-cyan-400 hover:-translate-y-2 transition duration-300 shadow-xl shadow-cyan-500/10"
+    >
+
+      <div className="text-5xl mb-6 text-cyan-400 group-hover:scale-110 transition">
+        🎓
+      </div>
+
+      <h3 className="text-2xl font-semibold mb-3">
+        Expert Mentorship
+      </h3>
+
+      <p className="text-gray-400">
+        Learn directly from industry mentors through curated
+        videos, guidance sessions, and real career insights.
+      </p>
+
+      <div className="mt-6 text-cyan-400 font-semibold group-hover:underline">
+        Explore Mentors →
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<SkillAnalyzer/>
+
     </div>
   );
 }

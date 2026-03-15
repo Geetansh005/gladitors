@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Particles from './Particles';
 
 function Login() {
   const [mode, setMode] = useState("login"); // login | signup | forgot | otp | reset
   const [googleUser, setGoogleUser] = useState(null);
   const navigate = useNavigate();
-  const location = useLocation(); // ← This enables smart redirect
+  const location = useLocation();
 
-  // Form states (controlled inputs) - ALL YOUR ORIGINAL STATES KEPT
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,20 +15,15 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // NEW STATES FOR FORGOT PASSWORD
   const [newPassword, setNewPassword] = useState("");
   const [isResetFlow, setIsResetFlow] = useState(false);
 
   const CLIENT_ID =
     "1072374566517-gk20td2ha6m61d76d1u3bprd0973rtql.apps.googleusercontent.com";
 
-  // ==================== SMART REDIRECT AFTER ANY SUCCESSFUL LOGIN ====================
   const handleSuccessfulLogin = (token, userData = null) => {
     localStorage.setItem("token", token);
 
-    // Where should we go after login?
-    // → Default: Home page (/)
-    // → If user came from "Start Career Test" button on Home: go to /chat
     const redirectTo = location.state?.from?.pathname || "/";
 
     if (userData) {
@@ -38,10 +33,9 @@ function Login() {
       alert("Login successful! Welcome back.");
     }
 
-    navigate(redirectTo); // ← This is the key change you asked for
+    navigate(redirectTo);
   };
 
-  // GOOGLE LOGIN (updated with smart redirect)
   const handleCredentialResponse = async (response) => {
     setLoading(true);
     setMessage("");
@@ -67,7 +61,6 @@ function Login() {
     }
   };
 
-  // Initialize Google button - YOUR ORIGINAL CODE - UNCHANGED
   useEffect(() => {
     const timer = setTimeout(() => {
       if (window.google) {
@@ -92,7 +85,6 @@ function Login() {
     return () => clearTimeout(timer);
   }, []);
 
-  // EMAIL SIGNUP - YOUR ORIGINAL CODE - UNCHANGED
   const handleSignup = async () => {
     if (!email || !password) {
       setMessage("Email and password are required");
@@ -124,7 +116,6 @@ function Login() {
     }
   };
 
-  // OTP VERIFICATION (updated with smart redirect for normal signup)
   const handleVerifyOtp = async () => {
     if (!otp || otp.length !== 6) {
       setMessage("Please enter 6-digit OTP");
@@ -160,7 +151,6 @@ function Login() {
     }
   };
 
-  // EMAIL LOGIN (updated with smart redirect)
   const handleLogin = async () => {
     if (!email || !password) {
       setMessage("Email and password are required");
@@ -191,7 +181,6 @@ function Login() {
     }
   };
 
-  // FORGOT PASSWORD (send OTP) - YOUR ORIGINAL CODE - UNCHANGED
   const handleForgotPassword = async () => {
     if (!email) {
       setMessage("Email is required");
@@ -222,7 +211,6 @@ function Login() {
     }
   };
 
-  // RESET PASSWORD (updated with smart redirect)
   const handleResetPassword = async () => {
     if (!newPassword || newPassword.length < 6) {
       setMessage("New password must be at least 6 characters");
@@ -253,13 +241,28 @@ function Login() {
     }
   };
 
-  // RENDER - YOUR ORIGINAL UI 100% UNCHANGED (only logic inside is updated)
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-5xl bg-white shadow-lg rounded-lg flex overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-black relative overflow-hidden">
 
-        {/* LEFT SIDE - YOUR ORIGINAL CODE - UNCHANGED */}
-        <div className="hidden md:flex w-1/2 bg-blue-600 text-white flex-col justify-center items-center p-12">
+      {/* 🔥 PARTICLES BACKGROUND - Full screen */}
+      <div className="absolute inset-0 z-0">
+        <Particles
+          particleColors={["#ffffff"]}
+          particleCount={200}
+          particleSpread={10}
+          speed={0.1}
+          particleBaseSize={100}
+          moveParticlesOnHover
+          alphaParticles={false}
+          disableRotation={false}
+          pixelRatio={1}
+        />
+      </div>
+
+      <div className="w-full max-w-5xl bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl rounded-3xl flex overflow-hidden relative z-10">
+
+        {/* LEFT SIDE - GLASS EFFECT */}
+        <div className="hidden md:flex w-1/2 bg-white/10 backdrop-blur-2xl border-r border-white/20 text-white flex-col justify-center items-center p-12">
           <h1 className="text-4xl font-bold mb-6">
             AI Career Assistant
           </h1>
@@ -272,8 +275,8 @@ function Login() {
           </div>
         </div>
 
-        {/* RIGHT SIDE */}
-        <div className="w-full md:w-1/2 p-10 flex flex-col justify-center">
+        {/* RIGHT SIDE - NORMAL WHITE */}
+        <div className="w-full md:w-1/2 p-10 flex flex-col justify-center bg-white">
 
           <h2 className="text-2xl font-semibold mb-2">
             {mode === "login" && "Welcome Back"}
@@ -291,14 +294,12 @@ function Login() {
             {mode === "reset" && "Enter your new password"}
           </p>
 
-          {/* MESSAGE */}
           {message && (
             <div className={`mb-4 p-3 rounded-md text-sm ${message.includes("success") || message.includes("sent") ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
               {message}
             </div>
           )}
 
-          {/* NAME (only signup) */}
           {mode === "signup" && (
             <input
               type="text"
@@ -309,7 +310,6 @@ function Login() {
             />
           )}
 
-          {/* EMAIL */}
           {(mode === "login" || mode === "signup" || mode === "otp" || mode === "forgot") && (
             <input
               type="email"
@@ -321,7 +321,6 @@ function Login() {
             />
           )}
 
-          {/* PASSWORD */}
           {mode !== "forgot" && mode !== "otp" && mode !== "reset" && (
             <input
               type="password"
@@ -332,7 +331,6 @@ function Login() {
             />
           )}
 
-          {/* OTP INPUT */}
           {mode === "otp" && (
             <input
               type="text"
@@ -344,7 +342,6 @@ function Login() {
             />
           )}
 
-          {/* NEW PASSWORD FIELD (reset mode) */}
           {mode === "reset" && (
             <input
               type="password"
@@ -355,7 +352,6 @@ function Login() {
             />
           )}
 
-          {/* FORGOT PASSWORD LINK */}
           {mode === "login" && (
             <p
               className="text-sm text-blue-600 mb-5 cursor-pointer hover:underline"
@@ -365,7 +361,6 @@ function Login() {
             </p>
           )}
 
-          {/* MAIN BUTTON */}
           <button
             onClick={() => {
               if (mode === "login") handleLogin();
@@ -385,7 +380,6 @@ function Login() {
             {!loading && mode === "reset" && "Reset Password"}
           </button>
 
-          {/* DIVIDER + GOOGLE BUTTON */}
           {mode !== "forgot" && mode !== "otp" && mode !== "reset" && (
             <>
               <div className="flex items-center gap-3 mb-6">
@@ -413,7 +407,6 @@ function Login() {
             </>
           )}
 
-          {/* SWITCH MODES */}
           {mode === "login" && (
             <p className="text-sm text-gray-500 mt-8">
               Don't have an account?{" "}
