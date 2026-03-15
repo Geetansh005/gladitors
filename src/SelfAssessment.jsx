@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function Assessment() {
+export default function SelfAssessment() {
+  const navigate = useNavigate();
 
+  // ✅ FULL QUESTION POOL (13 questions)
   const questionPool = [
     {
       question: "Which activity do you enjoy the most?",
@@ -125,16 +128,22 @@ export default function Assessment() {
   const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const [result, setResult] = useState(null);
+  const [loadingAI, setLoadingAI] = useState(false);
 
-  // Randomize and pick 10
+  // Randomize and pick 10 questions
   useEffect(() => {
     const shuffled = [...questionPool].sort(() => Math.random() - 0.5);
     setQuestions(shuffled.slice(0, 10));
   }, []);
 
-  if (questions.length === 0) return null;
+  if (questions.length === 0) {
+    return <div className="min-h-screen flex items-center justify-center text-white">Loading questions...</div>;
+  }
 
   const current = questions[step];
+  const progress = ((step + 1) / questions.length) * 100;
 
   const handleSelect = (option) => {
     setAnswers({ ...answers, [step]: option });
@@ -148,12 +157,32 @@ export default function Assessment() {
     setStep(step - 1);
   };
 
-  const submit = () => {
-    console.log("Assessment answers:", answers);
-    alert("Assessment submitted! AI will analyze your career path.");
-  };
+  const submit = async () => {
+    setLoadingAI(true);
+    try {
+      const res = await fetch("http://localhost:3000/api/assessment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ answers }),
+      });
 
-  const progress = ((step + 1) / questions.length) * 100;
+      const data = await res.json();
+
+      if (data.success) {
+        setResult(data.analysis);
+        setSubmitted(true);
+      } else {
+        alert("AI analysis failed. Please try again.");
+      }
+    } catch (err) {
+      alert("Network error. Please check your connection.");
+    } finally {
+      setLoadingAI(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white flex justify-center items-center p-6">
@@ -172,60 +201,72 @@ export default function Assessment() {
           Question {step + 1} / {questions.length}
         </p>
 
-        <h2 className="text-2xl font-semibold mb-8">
-          {current.question}
-        </h2>
+        {!submitted ? (
+          <>
+            <h2 className="text-2xl font-semibold mb-8">
+              {current.question}
+            </h2>
 
-        {/* Options */}
-        <div className="space-y-4">
-          {current.options.map((option, i) => (
+            <div className="space-y-4">
+              {current.options.map((option, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleSelect(option)}
+                  className={`w-full text-left p-4 rounded-xl border transition ${
+                    answers[step] === option
+                      ? "bg-purple-600 border-purple-400 scale-[1.02]"
+                      : "bg-gray-800 border-gray-700 hover:bg-gray-700"
+                  }`}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex justify-between mt-10">
+              <button
+                onClick={prev}
+                disabled={step === 0}
+                className="px-5 py-2 bg-gray-700 rounded-lg disabled:opacity-40"
+              >
+                Previous
+              </button>
+
+              {step === questions.length - 1 ? (
+                <button
+                  onClick={submit}
+                  disabled={!answers[step] || loadingAI}
+                  className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg disabled:opacity-40"
+                >
+                  {loadingAI ? "AI is analyzing..." : "Submit & Get Roadmap"}
+                </button>
+              ) : (
+                <button
+                  onClick={next}
+                  disabled={!answers[step]}
+                  className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg disabled:opacity-40"
+                >
+                  Next
+                </button>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="text-center">
+            <h2 className="text-3xl font-bold mb-6 text-purple-400">Your Personalized Career Roadmap</h2>
+            <div className="bg-gray-800 p-8 rounded-2xl text-left whitespace-pre-line text-sm leading-relaxed">
+              {result}
+            </div>
+
             <button
-              key={i}
-              onClick={() => handleSelect(option)}
-              className={`w-full text-left p-4 rounded-xl border transition ${
-                answers[step] === option
-                  ? "bg-purple-600 border-purple-400 scale-[1.02]"
-                  : "bg-gray-800 border-gray-700 hover:bg-gray-700"
-              }`}
+              onClick={() => navigate("/chat")}
+              className="mt-8 px-8 py-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg hover:scale-105 transition"
             >
-              {option}
+              Continue to AI Chat
             </button>
-          ))}
-        </div>
-
-        {/* Navigation */}
-        <div className="flex justify-between mt-10">
-
-          <button
-            onClick={prev}
-            disabled={step === 0}
-            className="px-5 py-2 bg-gray-700 rounded-lg disabled:opacity-40"
-          >
-            Previous
-          </button>
-
-          {step === questions.length - 1 ? (
-            <button
-              onClick={submit}
-              disabled={!answers[step]}
-              className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg disabled:opacity-40"
-            >
-              Submit
-            </button>
-          ) : (
-            <button
-              onClick={next}
-              disabled={!answers[step]}
-              className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg disabled:opacity-40"
-            >
-              Next
-            </button>
-          )}
-
-        </div>
-
+          </div>
+        )}
       </div>
-
     </div>
   );
 }
