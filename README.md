@@ -1,16 +1,37 @@
-# React + Vite
+# 🚀 AI Career Assistant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<div align="center">
 
-Currently, two official plugins are available:
+### 🎯 Find Your Perfect Stream After Class 10
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+An **AI-powered career guidance platform** that helps students discover the best academic stream based on **marks, interests, and AI analysis**.
 
-## React Compiler
+Built using **Groq Llama AI + Flux Image Generation** with a **modern dark UI**.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+<br>
 
-## Expanding the ESLint configuration
+![GitHub stars](https://img.shields.io/github/stars/yourusername/ai-career-assistant?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/yourusername/ai-career-assistant?style=for-the-badge)
+![License](https://img.shields.io/github/license/yourusername/ai-career-assistant?style=for-the-badge)
+![React](https://img.shields.io/badge/React-18-blue?style=for-the-badge)
+![Node](https://img.shields.io/badge/Node.js-Backend-green?style=for-the-badge)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-darkgreen?style=for-the-badge)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+</div>
+
+---
+
+# ✨ Features
+
+## 🔐 Smart Authentication
+
+* Google **OAuth 2.0 login**
+* Email signup with **OTP verification**
+* Secure **JWT authentication**
+* Password hashing using **bcrypt**
+
+---
+
+## 📊 AI Career Assessment
+
+A **3-step intelligent career evaluation system**.
