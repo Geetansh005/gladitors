@@ -5,7 +5,9 @@ import Chatbot from "./Chat";
 import Profile from "./Profile";
 import ProtectedRoute from "./ProtectedRoute";
 import SelfAssessment from "./SelfAssessment";
+import ProgressReport from "./ProgressReport";
 import Navbar from "./Navbar";
+import ParentDashboard from "./ParentDashboard";
 
 
 function App() {
@@ -46,7 +48,22 @@ function App() {
     </ProtectedRoute>
   }
 />
-
+<Route
+  path="/parent-dashboard"
+  element={
+    <ProtectedRoute>
+      <ParentDashboard />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/progress"
+  element={
+    <ProtectedRoute>
+      <ProgressReport />
+    </ProtectedRoute>
+  }
+/>
       </Routes>
     </>
   );
