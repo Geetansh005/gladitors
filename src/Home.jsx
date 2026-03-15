@@ -3,6 +3,7 @@ import SkillAnalyzer from "./SkillAnalyzer";
 import Footer from "./Footer";
 
 export default function PsychometricTest() {
+
   const navigate = useNavigate();
 
   return (
@@ -32,22 +33,35 @@ export default function PsychometricTest() {
           abilities with the most suitable career path.
         </p>
 
-        {/* CTA */}
-        <button
-          onClick={() => navigate("/assessment")}
-          className="mt-10 px-12 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-110 transition duration-300 shadow-xl shadow-purple-500/30"
-        >
-          Take The Test
-        </button>
+        {/* BUTTONS */}
+        <div className="mt-12 flex flex-col items-center gap-6">
+
+          {/* Chat with AI */}
+          <button
+            onClick={() => navigate("/chat")}
+            className="px-12 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-110 transition duration-300 shadow-xl shadow-purple-500/30"
+          >
+            Chat with AI
+          </button>
+
+          {/* Take Test */}
+          <button
+            onClick={() => navigate("/assessment")}
+            className="px-12 py-3 rounded-xl border border-purple-500 text-purple-400 hover:bg-purple-500/10 transition"
+          >
+            Take the Psychometric Test
+          </button>
+
+        </div>
 
       </section>
+
 
       {/* WHAT IS TEST */}
       <section className="text-center px-6 pb-16">
 
         <h2 className="text-4xl font-semibold mb-6 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
           What is the Psychometric Test?
-
         </h2>
 
         <p className="max-w-2xl mx-auto text-gray-400">
@@ -58,6 +72,7 @@ export default function PsychometricTest() {
 
       </section>
 
+
       {/* FEATURE CARDS */}
       <section className="pb-28 px-6">
 
@@ -65,7 +80,6 @@ export default function PsychometricTest() {
 
           {/* CARD 1 */}
           <div className="group p-8 rounded-2xl border border-gray-800 bg-white/5 backdrop-blur-xl hover:border-purple-500 hover:-translate-y-2 transition duration-300">
-
             <div className="text-4xl mb-4 text-purple-400 group-hover:scale-110 transition">
               🧠
             </div>
@@ -78,8 +92,8 @@ export default function PsychometricTest() {
               Analyze your personality traits and behavior patterns
               to understand environments where you perform best.
             </p>
-
           </div>
+
 
           {/* CARD 2 */}
           <div className="group p-8 rounded-2xl border border-gray-800 bg-white/5 backdrop-blur-xl hover:border-blue-500 hover:-translate-y-2 transition duration-300">
@@ -98,6 +112,7 @@ export default function PsychometricTest() {
             </p>
 
           </div>
+
 
           {/* CARD 3 */}
           <div className="group p-8 rounded-2xl border border-gray-800 bg-white/5 backdrop-blur-xl hover:border-cyan-400 hover:-translate-y-2 transition duration-300">
@@ -120,101 +135,108 @@ export default function PsychometricTest() {
         </div>
 
       </section>
-    <section className="py-24 px-6 border-t border-gray-800">
-
-  <h2 className="text-4xl text-center font-semibold mb-10 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-    See How AI Guides Your Career
-  </h2>
-
-  <div className="max-w-6xl mx-auto">
-
-    <div className="relative rounded-2xl overflow-hidden border border-gray-800 shadow-xl shadow-purple-500/10">
-
-      {/* Video */}
-      <video
-        className="w-full h-[420px] object-cover"
-        controls
-        autoPlay
-        muted
-        loop
-      >
-        <source src="video.mp4" type="video/mp4" />
-      </video>
-
-      {/* Glow overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
-
-    </div>
-
-  </div>
-
-</section>
-{/* NEXT STEPS */}
-<section className="py-24 px-6 border-t border-gray-800">
-
-  <h2 className="text-4xl text-center font-semibold mb-14 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-    Explore More Career Guidance
-  </h2>
-
-  <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10">
-
-    {/* AI CHATBOT CARD */}
-    <div
-      onClick={() => navigate("/chat")}
-      className="group cursor-pointer p-10 rounded-2xl border border-gray-800 bg-white/5 backdrop-blur-xl hover:border-purple-500 hover:-translate-y-2 transition duration-300 shadow-xl shadow-purple-500/10"
-    >
-
-      <div className="text-5xl mb-6 text-purple-400 group-hover:scale-110 transition">
-        🤖
-      </div>
-
-      <h3 className="text-2xl font-semibold mb-3">
-        AI Career Chatbot
-      </h3>
-
-      <p className="text-gray-400">
-        Talk with our AI assistant to get instant guidance on
-        careers, skills, learning paths, and job opportunities.
-      </p>
-
-      <div className="mt-6 text-purple-400 font-semibold group-hover:underline">
-        Start Chat →
-      </div>
-
-    </div>
 
 
-    {/* MENTORSHIP CARD */}
-    <div
-      className="group cursor-pointer p-10 rounded-2xl border border-gray-800 bg-white/5 backdrop-blur-xl hover:border-cyan-400 hover:-translate-y-2 transition duration-300 shadow-xl shadow-cyan-500/10"
-    >
+      {/* VIDEO SECTION */}
+      <section className="py-24 px-6 border-t border-gray-800">
 
-      <div className="text-5xl mb-6 text-cyan-400 group-hover:scale-110 transition">
-        🎓
-      </div>
+        <h2 className="text-4xl text-center font-semibold mb-10 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+          See How AI Guides Your Career
+        </h2>
 
-      <h3 className="text-2xl font-semibold mb-3">
-        Expert Mentorship
-      </h3>
+        <div className="max-w-6xl mx-auto">
 
-      <p className="text-gray-400">
-        Learn directly from industry mentors through curated
-        videos, guidance sessions, and real career insights.
-      </p>
+          <div className="relative rounded-2xl overflow-hidden border border-gray-800 shadow-xl shadow-purple-500/10">
 
-      <div className="mt-6 text-cyan-400 font-semibold group-hover:underline">
-        Explore Mentors →
-      </div>
+            <video
+              className="w-full h-[420px] object-cover"
+              controls
+              autoPlay
+              muted
+              loop
+            >
+              <source src="video.mp4" type="video/mp4" />
+            </video>
 
-    </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
 
-  </div>
+          </div>
 
-</section>
+        </div>
+
+      </section>
+
+
+      {/* NEXT STEPS */}
+      <section className="py-24 px-6 border-t border-gray-800">
+
+        <h2 className="text-4xl text-center font-semibold mb-14 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+          Explore More Career Guidance
+        </h2>
+
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10">
+
+          {/* AI CHAT CARD */}
+          <div
+            onClick={() => navigate("/chat")}
+            className="group cursor-pointer p-10 rounded-2xl border border-gray-800 bg-white/5 backdrop-blur-xl hover:border-purple-500 hover:-translate-y-2 transition duration-300 shadow-xl shadow-purple-500/10"
+          >
+
+            <div className="text-5xl mb-6 text-purple-400 group-hover:scale-110 transition">
+              🤖
+            </div>
+
+            <h3 className="text-2xl font-semibold mb-3">
+              AI Career Chatbot
+            </h3>
+
+            <p className="text-gray-400">
+              Talk with our AI assistant to get instant guidance on
+              careers, skills, learning paths, and job opportunities.
+            </p>
+
+            <div className="mt-6 text-purple-400 font-semibold group-hover:underline">
+              Start Chat →
+            </div>
+
+          </div>
+
+
+          {/* MENTORSHIP CARD */}
+          <div
+            className="group cursor-pointer p-10 rounded-2xl border border-gray-800 bg-white/5 backdrop-blur-xl hover:border-cyan-400 hover:-translate-y-2 transition duration-300 shadow-xl shadow-cyan-500/10"
+          >
+
+            <div className="text-5xl mb-6 text-cyan-400 group-hover:scale-110 transition">
+              🎓
+            </div>
+
+            <h3 className="text-2xl font-semibold mb-3">
+              Expert Mentorship
+            </h3>
+
+            <p className="text-gray-400">
+              Learn directly from industry mentors through curated
+              videos, guidance sessions, and real career insights.
+            </p>
+
+            <div className="mt-6 text-cyan-400 font-semibold group-hover:underline">
+              Explore Mentors →
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* SKILL ANALYZER */}
       <SkillAnalyzer />
-      <Footer/>
-  </div>
 
+      {/* FOOTER */}
+      <Footer />
 
+    </div>
   );
 }
