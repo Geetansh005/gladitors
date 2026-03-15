@@ -210,8 +210,9 @@ export default function PsychometricTest() {
   </div>
 
 </section>
-<SkillAnalyzer/>
+      <SkillAnalyzer />
+  </div>
 
-    </div>
+
   );
 }
