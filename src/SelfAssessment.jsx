@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Assessment() {
 
-  const questions = [
+  const questionPool = [
     {
       question: "Which activity do you enjoy the most?",
       options: [
@@ -22,30 +22,30 @@ export default function Assessment() {
       ]
     },
     {
-      question: "Are you comfortable working with numbers and data?",
+      question: "If money didn't matter, what would you do daily?",
       options: [
-        "Yes",
-        "Somewhat",
-        "Not really",
-        "No"
+        "Build technology or apps",
+        "Create art or design",
+        "Help people solve problems",
+        "Start businesses"
+      ]
+    },
+    {
+      question: "What type of YouTube/videos do you watch most?",
+      options: [
+        "Technology / Programming",
+        "Business / Entrepreneurship",
+        "Design / Creative content",
+        "Science / Education"
       ]
     },
     {
       question: "Do you enjoy coding or building software?",
       options: [
-        "Yes, a lot",
+        "Yes, very much",
         "Sometimes",
-        "Not much",
-        "No"
-      ]
-    },
-    {
-      question: "Do you prefer working:",
-      options: [
-        "In a team",
-        "Alone",
-        "Both",
-        "Depends on project"
+        "Not really",
+        "Never tried"
       ]
     },
     {
@@ -58,106 +58,148 @@ export default function Assessment() {
       ]
     },
     {
-      question: "Would you rather work:",
+      question: "Do you prefer working:",
       options: [
-        "In an office",
-        "Outdoors",
-        "Remotely",
-        "Hybrid"
+        "In a team",
+        "Alone",
+        "Both",
+        "Depends on project"
       ]
     },
     {
-      question: "Do you prefer:",
-      options: [
-        "Stable routine work",
-        "New challenges every day",
-        "Flexible tasks",
-        "Not sure"
-      ]
-    },
-    {
-      question: "What is your main career goal?",
+      question: "What motivates you the most?",
       options: [
         "High salary",
         "Creativity",
-        "Helping society",
-        "Job security"
+        "Helping people",
+        "Innovation"
       ]
     },
     {
-      question: "If a project fails, what do you do?",
+      question: "Do you like solving complex problems?",
       options: [
-        "Analyze the problem",
-        "Ask for help",
-        "Try a new approach",
-        "Move to another task"
+        "Yes",
+        "Sometimes",
+        "Rarely",
+        "No"
+      ]
+    },
+    {
+      question: "What kind of work environment do you prefer?",
+      options: [
+        "Office",
+        "Remote",
+        "Hybrid",
+        "Outdoor"
+      ]
+    },
+    {
+      question: "How do you usually approach a difficult task?",
+      options: [
+        "Analyze it step-by-step",
+        "Ask others for help",
+        "Experiment with solutions",
+        "Avoid it"
+      ]
+    },
+    {
+      question: "Do you enjoy learning new technologies?",
+      options: [
+        "Yes, always",
+        "Sometimes",
+        "Rarely",
+        "No"
+      ]
+    },
+    {
+      question: "What type of work excites you most?",
+      options: [
+        "Building software",
+        "Designing creative things",
+        "Running businesses",
+        "Helping communities"
       ]
     }
   ];
 
+  const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
 
+  // Randomize and pick 10
+  useEffect(() => {
+    const shuffled = [...questionPool].sort(() => Math.random() - 0.5);
+    setQuestions(shuffled.slice(0, 10));
+  }, []);
+
+  if (questions.length === 0) return null;
+
+  const current = questions[step];
+
   const handleSelect = (option) => {
-    setAnswers({
-      ...answers,
-      [step]: option
-    });
+    setAnswers({ ...answers, [step]: option });
   };
 
   const next = () => {
-    if (step < questions.length - 1) {
-      setStep(step + 1);
-    }
+    if (answers[step]) setStep(step + 1);
   };
 
   const prev = () => {
-    if (step > 0) {
-      setStep(step - 1);
-    }
+    setStep(step - 1);
   };
 
   const submit = () => {
-    console.log("User Answers:", answers);
+    console.log("Assessment answers:", answers);
     alert("Assessment submitted! AI will analyze your career path.");
   };
 
-  const current = questions[step];
+  const progress = ((step + 1) / questions.length) * 100;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white flex justify-center items-center p-6">
 
-      <div className="w-full max-w-xl bg-gray-900 border border-gray-800 rounded-xl p-8">
+      <div className="w-full max-w-2xl bg-gray-900 border border-gray-800 rounded-2xl p-10 shadow-xl">
 
-        <h2 className="text-xl font-semibold mb-6">
+        {/* Progress bar */}
+        <div className="w-full bg-gray-800 h-2 rounded mb-6">
+          <div
+            className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+
+        <p className="text-gray-400 text-sm mb-2">
           Question {step + 1} / {questions.length}
+        </p>
+
+        <h2 className="text-2xl font-semibold mb-8">
+          {current.question}
         </h2>
 
-        <p className="text-lg mb-6">{current.question}</p>
-
-        <div className="space-y-3">
-
+        {/* Options */}
+        <div className="space-y-4">
           {current.options.map((option, i) => (
             <button
               key={i}
               onClick={() => handleSelect(option)}
-              className={`w-full text-left p-3 rounded-lg border ${
+              className={`w-full text-left p-4 rounded-xl border transition ${
                 answers[step] === option
-                  ? "bg-purple-600 border-purple-500"
+                  ? "bg-purple-600 border-purple-400 scale-[1.02]"
                   : "bg-gray-800 border-gray-700 hover:bg-gray-700"
               }`}
             >
               {option}
             </button>
           ))}
-
         </div>
 
-        <div className="flex justify-between mt-8">
+        {/* Navigation */}
+        <div className="flex justify-between mt-10">
 
           <button
             onClick={prev}
-            className="px-4 py-2 bg-gray-700 rounded-lg"
+            disabled={step === 0}
+            className="px-5 py-2 bg-gray-700 rounded-lg disabled:opacity-40"
           >
             Previous
           </button>
@@ -165,14 +207,16 @@ export default function Assessment() {
           {step === questions.length - 1 ? (
             <button
               onClick={submit}
-              className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg"
+              disabled={!answers[step]}
+              className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg disabled:opacity-40"
             >
               Submit
             </button>
           ) : (
             <button
               onClick={next}
-              className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg"
+              disabled={!answers[step]}
+              className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg disabled:opacity-40"
             >
               Next
             </button>
