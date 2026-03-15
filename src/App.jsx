@@ -7,6 +7,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import SelfAssessment from "./SelfAssessment";
 import Navbar from "./Navbar";
 
+
 function App() {
   return (
     <>

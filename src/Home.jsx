@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import SkillAnalyzer from "./SkillAnalyzer";
+import Footer from "./Footer";
 
 export default function PsychometricTest() {
   const navigate = useNavigate();
@@ -211,6 +212,7 @@ export default function PsychometricTest() {
 
 </section>
       <SkillAnalyzer />
+      <Footer/>
   </div>
 
 
